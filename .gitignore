@@ -1,0 +1,7 @@
+.vscode
+.vs
+.idea
+node_modules
+.env
+bin
+.diacord

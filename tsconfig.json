@@ -1,0 +1,23 @@
+{
+  "ts-node": { "files": true },
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "target": "es6",
+    "outDir": "bin",
+    "rootDir": "./src",
+    "sourceMap": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "pretty": true
+  },
+  "exclude": ["./node_modules"]
+}
