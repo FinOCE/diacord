@@ -1,14 +1,10 @@
 {
-  "name": "diacord",
+  "name": "@diacord/api-types",
   "version": "1.0.0",
-  "description": "Infrastructure-as-code for Discord servers",
+  "description": "Typings for Discord's API",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn src/index.ts",
-    "build": "tsc && npm i -g ."
-  },
-  "bin": {
-    "diacord": "./bin/index.js"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -27,8 +23,6 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^20.11.20",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
   }
 }

@@ -4,7 +4,7 @@
     "alwaysStrict": true,
     "module": "commonjs",
     "target": "es6",
-    "outDir": "bin",
+    "outDir": "dist",
     "rootDir": "./src",
     "sourceMap": true,
     "strict": true,
