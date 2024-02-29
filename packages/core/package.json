@@ -1,0 +1,38 @@
+{
+  "name": "@diacord/core",
+  "version": "0.0.1",
+  "description": "Core functionality of Diacord",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FinOCE/diacord.git"
+  },
+  "keywords": [
+    "discord",
+    "infrastructure-as-code",
+    "cli"
+  ],
+  "author": "FinOCE",
+  "bugs": {
+    "url": "https://github.com/FinOCE/diacord/issues"
+  },
+  "homepage": "https://github.com/FinOCE/diacord#readme",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
