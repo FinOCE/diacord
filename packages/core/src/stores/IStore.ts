@@ -1,5 +1,5 @@
 export default interface IStore<T extends object> {
-  get(id: string): T | null
+  get(id: string): T
 
   set(id: string, item: T): void
 

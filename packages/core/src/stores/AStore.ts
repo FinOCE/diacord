@@ -5,7 +5,7 @@ export default abstract class AStore<T extends object> implements IStore<T> {
 
   public get(id: string) {
     if (this._items[id]) return this._items[id]
-    else return null
+    else throw new Error("Binder could not find instance of item")
   }
 
   public set(id: string, item: T) {

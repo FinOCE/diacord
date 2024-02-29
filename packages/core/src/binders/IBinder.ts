@@ -1,4 +1,8 @@
+import Diff from "../types/Diff"
+
 export default interface IBinder<T extends object> {
+  readonly modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }>
+
   getObject(id: string): T
 
   setObject(id: string, item: T): void
@@ -6,6 +10,4 @@ export default interface IBinder<T extends object> {
   getValue<K extends keyof T>(id: string, key: K): T[K]
 
   setValue<K extends keyof T>(id: string, key: K, value: T[K]): void
-
-  bind(id: string, item: T): T
 }

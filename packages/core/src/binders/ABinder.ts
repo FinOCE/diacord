@@ -1,8 +1,14 @@
 import IStore from "../stores/IStore"
+import Diff from "../types/Diff"
 import IBinder from "./IBinder"
 
 export default abstract class ABinder<T extends object> implements IBinder<T> {
   protected _store: IStore<T>
+  protected _modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }> = {}
+
+  public get modifications() {
+    return structuredClone(this._modifications)
+  }
 
   public abstract keys: (keyof T)[]
 
@@ -11,28 +17,42 @@ export default abstract class ABinder<T extends object> implements IBinder<T> {
   }
 
   public getObject(id: string) {
-    const model = this._store.get(id)
-    if (!model) throw new Error("Binder could not find instance of model")
-    return model
+    const item = this._store.get(id)
+    const clone = structuredClone(item)
+
+    return this._bind(id, clone)
   }
 
   public setObject(id: string, item: T) {
-    this._store.set(id, item)
+    const clone = structuredClone(item)
+
+    this._store.set(id, clone)
+    this._modifications[id] = {}
+
+    return this._bind(id, clone)
   }
 
   public getValue<K extends keyof T>(id: string, key: K) {
-    return this.getObject(id)[key]
+    const item = this._store.get(id)
+    const clone = structuredClone(item)
+
+    return clone[key]
   }
 
   public setValue<K extends keyof T>(id: string, key: K, value: T[K]) {
-    const model = this.getObject(id)
-    model[key] = value
-    this._store.set(id, model)
+    const item = this._store.get(id)
+    const clone = structuredClone(item)
+
+    if (!this._modifications[id][key]) this._modifications[id][key] = { original: clone[key], updated: value }
+    else if (this._modifications[id][key]!.original === value) delete this._modifications[id][key]
+    else this._modifications[id][key]!.updated = value
+
+    clone[key] = value
+    this._store.set(id, clone)
   }
 
-  public bind(id: string, item: T) {
+  protected _bind(id: string, item: T) {
     const clone = structuredClone(item)
-    this.setObject(id, item)
 
     this.keys.forEach(key =>
       Object.defineProperty(clone, key, {
