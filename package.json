@@ -1,0 +1,11 @@
+{
+  "name": "diacord",
+  "version": "1.0.0",
+  "description": "Infrastructure-as-code for Discord servers",
+  "scripts": {
+    "build": "npm run build --workspaces"
+  },
+  "workspaces": [
+    "./packages/*"
+  ]
+}

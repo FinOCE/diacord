@@ -1,8 +1,18 @@
 {
   "name": "@diacord/api-types",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Typings for Discord's API",
-  "main": "index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
