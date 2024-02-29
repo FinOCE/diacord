@@ -31,20 +31,16 @@ export default abstract class ABinder<T extends object> implements IBinder<T> {
   }
 
   public bind(id: string, item: T) {
-    item = structuredClone(item)
+    const clone = structuredClone(item)
     this.setObject(id, item)
 
     this.keys.forEach(key =>
-      Object.defineProperty(item, key, {
-        get() {
-          return this.getValue(id, key)
-        },
-        set(v) {
-          this.setValue(id, key, v)
-        }
+      Object.defineProperty(clone, key, {
+        get: () => this.getValue(id, key),
+        set: (v: T[keyof T]) => this.setValue(id, key, v)
       })
     )
 
-    return item
+    return clone
   }
 }

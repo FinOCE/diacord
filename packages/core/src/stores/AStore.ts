@@ -1,6 +1,6 @@
 import IStore from "./IStore"
 
-export default class AStore<T extends object> implements IStore<T> {
+export default abstract class AStore<T extends object> implements IStore<T> {
   protected _items: Record<string, T> = {}
 
   public get(id: string) {
