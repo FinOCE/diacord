@@ -7,7 +7,7 @@ export default interface IApiClient {
 
   put<K extends Action<"Put">>(route: K, data: RouteData[`Put${K}`][0]): Promise<RouteData[`Put${K}`][1]>
 
-  patch<K extends Action<"Patch">>(route: K, data: RouteData[`Patch${K}`][0]): Promise<RouteData[`Patch}${K}`][1]>
+  patch<K extends Action<"Patch">>(route: K, data: RouteData[`Patch${K}`][0]): Promise<RouteData[`Patch${K}`][1]>
 
   delete<K extends Action<"Delete">>(route: K, data: RouteData[`Delete${K}`][0]): Promise<RouteData[`Delete${K}`][1]>
 }

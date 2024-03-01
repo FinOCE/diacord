@@ -1,4 +1,15 @@
-import { Channel, Snowflake } from "@diacord/api-types"
+import {
+  Channel,
+  ChannelType,
+  DefaultReaction,
+  ForumLayoutType,
+  ForumTag,
+  PermissionOverwrite,
+  Snowflake,
+  SortOrderType,
+  VideoQualityMode,
+  int
+} from "@diacord/api-types"
 
 type RouteParams<T extends Record<string, string>> = {
   route: T
@@ -24,7 +35,7 @@ export type UnknownRouteData = Partial<
 >
 
 /**
- * TODO: Link
+ * https://discord.com/developers/docs/resources/channel#get-channel
  */
 type GetChannelResponse = Channel
 type GetChannelRequest = GetChannelRouteParams
@@ -32,12 +43,70 @@ type GetChannelRouteParams = RouteParams<{
   channelId: Snowflake
 }>
 
+/**
+ * https://discord.com/developers/docs/resources/channel#modify-channel
+ */
+type PatchChannelResponse = Channel
+type PatchChannelRequest = PatchChannelRouteParams & PatchChannelBody
+type PatchChannelRouteParams = RouteParams<{
+  channelId: Snowflake
+}>
+type PatchChannelBody = PatchChannelBodyGroupDm | PatchChannelBodyChannel | PatchChannelBodyThread
+type PatchChannelBodyGroupDm = Body<{
+  name?: string
+  icon?: BinaryData
+}>
+type PatchChannelBodyChannel = Body<{
+  name?: string
+  type?: ChannelType
+  position?: int | null
+  topic?: string | null
+  nsfw?: boolean | null
+  rate_limit_per_user?: int | null
+  bitrate?: int | null
+  user_limit?: int | null
+  permission_overwrites?: PermissionOverwrite[] | null // TODO: ** condition
+  parent_id?: Snowflake | null
+  rtc_region?: string | null | null
+  video_quality_mode?: VideoQualityMode | null
+  default_auto_archive_duration?: int | null
+  flags?: int
+  available_tags?: ForumTag[]
+  default_reaction_emoji?: DefaultReaction | null
+  default_thread_rate_limit_per_user?: int
+  default_sort_order?: SortOrderType | null
+  default_forum_layout?: ForumLayoutType
+}>
+type PatchChannelBodyThread = Body<{
+  name?: string
+  archived?: boolean
+  auto_archive_duration?: int
+  locked?: boolean
+  invitable?: boolean
+  rate_limit_per_user?: int
+  flags?: int
+  applied_tags?: Snowflake[]
+}>
+
+/**
+ * https://discord.com/developers/docs/resources/channel#deleteclose-channel
+ */
+type DeleteChannelResponse = Channel
+type DeleteChannelRequest = DeleteChannelRouteParams
+type DeleteChannelRouteParams = RouteParams<{
+  channelId: Snowflake
+}>
+
 const routes: Record<keyof RouteData, string> = {
-  GetChannel: "https://discord.com/api/v10/channels/{channelId}"
+  GetChannel: "https://discord.com/api/v10/channels/{channelId}",
+  PatchChannel: "https://discord.com/api/v10/channels/{channelId}",
+  DeleteChannel: "https://discord.com/api/v10/channels/{channelId}"
 } as const
 
 export type RouteData = {
   GetChannel: [GetChannelRequest, GetChannelResponse]
+  PatchChannel: [PatchChannelRequest, PatchChannelResponse]
+  DeleteChannel: [DeleteChannelRequest, DeleteChannelResponse]
 }
 
 export type Action<A extends string> = {
