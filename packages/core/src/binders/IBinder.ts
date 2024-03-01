@@ -1,6 +1,7 @@
 import Diff from "../types/Diff"
 
 export default interface IBinder<T extends object> {
+  readonly keys: (keyof T)[]
   readonly modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }>
 
   getObject(id: string): T

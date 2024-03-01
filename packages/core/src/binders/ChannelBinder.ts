@@ -3,7 +3,7 @@ import ABinder from "./ABinder"
 import { Channel } from "@diacord/api-types"
 
 export default class ChannelBinder extends ABinder<Channel> {
-  public keys = keys<Channel>()(
+  public readonly keys = keys<Channel>()(
     "id",
     "type",
     "guild_id",

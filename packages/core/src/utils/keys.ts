@@ -17,4 +17,4 @@ type CheckDuplicate<U extends readonly any[]> = {
  */
 export default <T extends Record<string, any>>() =>
   <U extends readonly (keyof T)[] | [keyof T]>(...u: U & CheckMissing<U, T> & CheckDuplicate<U>): U =>
-    u
+    Object.freeze(u)
