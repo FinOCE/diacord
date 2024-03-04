@@ -1,13 +1,18 @@
 import IStore from "../stores/IStore"
-import Diff from "../types/Diff"
-import IBinder from "./IBinder"
+import { Diff } from "../utils/diff"
+import IBinder, { Bound } from "./IBinder"
 
 export default abstract class ABinder<T extends object> implements IBinder<T> {
   protected _store: IStore<T>
   protected _modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }> = {}
+  protected _deletions: string[] = []
 
   public get modifications() {
     return structuredClone(this._modifications)
+  }
+
+  public get deletions() {
+    return structuredClone(this._deletions)
   }
 
   public abstract keys: (keyof T)[]
@@ -51,16 +56,39 @@ export default abstract class ABinder<T extends object> implements IBinder<T> {
     this._store.set(id, clone)
   }
 
+  public track(id: string) {
+    const item = { id } as T
+    this._store.set(id, item)
+
+    return this._bind(id, item)
+  }
+
   protected _bind(id: string, item: T) {
     const clone = structuredClone(item)
 
     this.keys.forEach(key =>
       Object.defineProperty(clone, key, {
         get: () => this.getValue(id, key),
-        set: (v: T[keyof T]) => this.setValue(id, key, v)
+        set: (v: T[keyof T]) => {
+          if (!this._deletions.some(d => d === id)) this.setValue(id, key, v)
+          else throw new Error("Cannot set value on item marked for deletion")
+        }
       })
     )
 
-    return clone
+    Object.defineProperty(clone, "delete", {
+      value: () => {
+        if (this._deletions.some(d => d === id)) this._deletions.push(id)
+      }
+    })
+
+    Object.defineProperty(clone, "restore", {
+      value: () => {
+        const index = this._deletions.indexOf(id)
+        if (index !== -1) this._deletions.splice(index, 1)
+      }
+    })
+
+    return clone as Bound<T>
   }
 }
