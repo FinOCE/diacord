@@ -1,9 +1,9 @@
-import { Channel, Snowflake } from "@diacord/api-types"
-import { RouteData, getNewDiffs, removeNull } from "../utils"
+import { Channel, Requests, Snowflake } from "@diacord/api-types"
+import { getNewDiffs, removeNull } from "../utils"
 import { AManager } from "./AManager"
 
 export class ChannelManager extends AManager<Channel> {
-  public async create(guildId: Snowflake, body: RouteData["PostChannel"][0]["body"]) {
+  public async create(guildId: Snowflake, body: Requests["PostChannel"][0]["body"]) {
     const res = await this._apiClient.post("Channel", { route: { guildId }, body })
     return this._binder.setObject(res.id, res)
 
