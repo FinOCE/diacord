@@ -1,8 +1,8 @@
-import IStore from "../stores/IStore"
-import { Diff } from "../utils/diff"
-import IBinder, { Bound } from "./IBinder"
+import { IStore } from "../stores/IStore"
+import { Diff } from "../utils"
+import { Bound, IBinder } from "./IBinder"
 
-export default abstract class ABinder<T extends object> implements IBinder<T> {
+export abstract class ABinder<T extends object> implements IBinder<T> {
   protected _store: IStore<T>
   protected _modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }> = {}
   protected _deletions: string[] = []

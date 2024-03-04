@@ -1,7 +1,7 @@
-import routes, { Action, RouteData, UnknownRouteData } from "../utils/routes"
-import IApiClient from "./IApiClient"
+import { Action, routes, RouteData, UnknownRouteData } from "../utils"
+import { IApiClient } from "./IApiClient"
 
-export default class ApiClient implements IApiClient {
+export class ApiClient implements IApiClient {
   private _query<A extends string>(method: A) {
     return <K extends Action<A>>(item: K, { route, query, body, headers }: UnknownRouteData) => {
       const endpoint = Object.keys(route ?? {}).reduce(

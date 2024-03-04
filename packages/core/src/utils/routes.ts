@@ -97,7 +97,7 @@ type DeleteChannelRouteParams = RouteParams<{
   channelId: Snowflake
 }>
 
-const routes: Record<keyof RouteData, string> = {
+export const routes: Record<keyof RouteData, string> = {
   GetChannel: "https://discord.com/api/v10/channels/{channelId}",
   PatchChannel: "https://discord.com/api/v10/channels/{channelId}",
   DeleteChannel: "https://discord.com/api/v10/channels/{channelId}"
@@ -112,5 +112,3 @@ export type RouteData = {
 export type Action<A extends string> = {
   [P in keyof RouteData]: P extends `${A}${infer K}` ? K : never
 }[keyof RouteData]
-
-export default routes

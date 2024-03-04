@@ -1,4 +1,4 @@
-import AStore from "./AStore"
+import { AStore } from "./AStore"
 import { Channel } from "@diacord/api-types"
 
-export default class ChannelStore extends AStore<Channel> {}
+export class ChannelStore extends AStore<Channel> {}

@@ -1,6 +1,6 @@
-import { Action, RouteData } from "../utils/routes"
+import { Action, RouteData } from "../utils"
 
-export default interface IApiClient {
+export interface IApiClient {
   get<K extends Action<"Get">>(route: K, data: RouteData[`Get${K}`][0]): Promise<RouteData[`Get${K}`][1]>
 
   post<K extends Action<"Post">>(route: K, data: RouteData[`Post${K}`][0]): Promise<RouteData[`Post${K}`][1]>

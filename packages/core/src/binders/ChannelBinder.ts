@@ -1,8 +1,8 @@
-import keys from "../utils/keys"
-import ABinder from "./ABinder"
+import { keys } from "../utils"
+import { ABinder } from "./ABinder"
 import { Channel } from "@diacord/api-types"
 
-export default class ChannelBinder extends ABinder<Channel> {
+export class ChannelBinder extends ABinder<Channel> {
   public readonly keys = keys<Channel>()(
     "id",
     "type",

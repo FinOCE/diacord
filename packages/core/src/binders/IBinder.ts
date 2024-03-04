@@ -1,6 +1,6 @@
-import { Diff } from "../utils/diff"
+import { Diff } from "../utils"
 
-export default interface IBinder<T extends object> {
+export interface IBinder<T extends object> {
   readonly keys: (keyof T)[]
   readonly modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }>
   readonly deletions: string[]

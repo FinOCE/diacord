@@ -1,11 +1,10 @@
 import { Channel, Snowflake } from "@diacord/api-types"
-import IApiClient from "../api/IApiClient"
-import ChannelBinder from "../binders/ChannelBinder"
-import { getNewDiffs } from "../utils"
+import { IApiClient } from "../api"
+import { ChannelBinder } from "../binders"
+import { getNewDiffs, removeNull } from "../utils"
 import { Bound } from "../binders"
-import removeNull from "../utils/removeNull"
 
-export default class ChannelManager {
+export class ChannelManager {
   private readonly _apiClient: IApiClient
   private readonly _binder: ChannelBinder
 

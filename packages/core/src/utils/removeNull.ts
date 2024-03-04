@@ -4,7 +4,7 @@
  * @param keys The keys to remove nullability from
  * @returns The updated object
  */
-export default function removeNull<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
+export function removeNull<T extends object, K extends keyof T>(obj: T, ...keys: K[]) {
   const clone = structuredClone(obj)
 
   for (const key of keys) {

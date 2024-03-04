@@ -1,4 +1,4 @@
-export default interface IStore<T extends object> {
+export interface IStore<T extends object> {
   get(id: string): T
 
   set(id: string, item: T): void
