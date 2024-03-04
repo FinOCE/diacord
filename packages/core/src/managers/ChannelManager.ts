@@ -1,32 +1,19 @@
 import { Channel, Snowflake } from "@diacord/api-types"
-import { IApiClient } from "../api"
-import { ChannelBinder } from "../binders"
 import { getNewDiffs, removeNull } from "../utils"
-import { Bound } from "../binders"
+import { AManager } from "./AManager"
 
-export class ChannelManager {
-  private readonly _apiClient: IApiClient
-  private readonly _binder: ChannelBinder
-
-  public constructor(apiClient: IApiClient, binder: ChannelBinder) {
-    this._apiClient = apiClient
-    this._binder = binder
-  }
-
-  public async fetch(id: Snowflake, force: boolean = false) {
-    let channel: Bound<Channel>
+export class ChannelManager extends AManager<Channel> {
+  public override async fetch(id: Snowflake, force: boolean = false) {
     try {
-      channel = this._binder.getObject(id)
+      if (force) throw new Error("Forcing re-fetch")
+      return this._binder.getObject(id)
     } catch (err) {
       const res = await this._apiClient.get("Channel", { route: { channelId: id } })
-      this._binder.setObject(id, res)
-      channel = this._binder.getObject(id)
+      return this._binder.setObject(id, res)
     }
-
-    return channel
   }
 
-  public async saveChanges() {
+  public override async saveChanges() {
     for (const channelId of this._binder.deletions) {
       await this._apiClient.delete("Channel", { route: { channelId } })
     }

@@ -7,7 +7,7 @@ export interface IBinder<T extends object> {
 
   getObject(id: string): Bound<T>
 
-  setObject(id: string, item: T): void
+  setObject(id: string, item: T): Bound<T>
 
   getValue<K extends keyof T>(id: string, key: K): T[K]
 
