@@ -1,4 +1,4 @@
-import { IStore } from "../stores/IStore"
+import { IStore } from "../stores"
 import { Diff } from "../utils"
 import { Bound, IBinder } from "./IBinder"
 
@@ -64,7 +64,15 @@ export abstract class ABinder<T extends object> implements IBinder<T> {
   }
 
   protected _bind(id: string, item: T) {
-    const clone = structuredClone(item)
+    const clone = Object.assign(structuredClone(item), {
+      delete: () => {
+        if (!this._deletions.some(d => d === id)) this._deletions.push(id)
+      },
+      restore: () => {
+        const index = this._deletions.indexOf(id)
+        if (index !== -1) this._deletions.splice(index, 1)
+      }
+    })
 
     this.keys.forEach(key =>
       Object.defineProperty(clone, key, {
@@ -75,19 +83,6 @@ export abstract class ABinder<T extends object> implements IBinder<T> {
         }
       })
     )
-
-    Object.defineProperty(clone, "delete", {
-      value: () => {
-        if (this._deletions.some(d => d === id)) this._deletions.push(id)
-      }
-    })
-
-    Object.defineProperty(clone, "restore", {
-      value: () => {
-        const index = this._deletions.indexOf(id)
-        if (index !== -1) this._deletions.splice(index, 1)
-      }
-    })
 
     return clone as Bound<T>
   }
