@@ -35,6 +35,35 @@ export type UnknownRouteData = Partial<
 >
 
 /**
+ * https://discord.com/developers/docs/resources/guild#create-guild-channel
+ */
+type PostChannelResponse = Channel
+type PostChannelRequest = PostChannelRouteParams & PostChannelBody
+type PostChannelRouteParams = RouteParams<{
+  guildId: Snowflake
+}>
+type PostChannelBody = Body<{
+  name: string
+  type?: ChannelType
+  topic?: string | null
+  bitrate?: int | null
+  user_limit?: int | null
+  rate_limit_per_user?: int | null
+  position?: int | null
+  permission_overwrites?: PermissionOverwrite[] | null // TODO: ** condition
+  parent_id?: Snowflake | null
+  nsfw?: boolean | null
+  rtc_region?: string | null | null
+  video_quality_mode?: VideoQualityMode | null
+  default_auto_archive_duration?: int | null
+  default_reaction_emoji?: DefaultReaction | null
+  available_tags?: ForumTag[]
+  default_sort_order?: SortOrderType | null
+  default_forum_layout?: ForumLayoutType
+  default_thread_rate_limit_per_user?: int | null
+}>
+
+/**
  * https://discord.com/developers/docs/resources/channel#get-channel
  */
 type GetChannelResponse = Channel
@@ -98,12 +127,14 @@ type DeleteChannelRouteParams = RouteParams<{
 }>
 
 export const routes: Record<keyof RouteData, string> = {
+  PostChannel: "https://discord.com/api/v10/guilds/{guildId}/channels",
   GetChannel: "https://discord.com/api/v10/channels/{channelId}",
   PatchChannel: "https://discord.com/api/v10/channels/{channelId}",
   DeleteChannel: "https://discord.com/api/v10/channels/{channelId}"
 } as const
 
 export type RouteData = {
+  PostChannel: [PostChannelRequest, PostChannelResponse]
   GetChannel: [GetChannelRequest, GetChannelResponse]
   PatchChannel: [PatchChannelRequest, PatchChannelResponse]
   DeleteChannel: [DeleteChannelRequest, DeleteChannelResponse]

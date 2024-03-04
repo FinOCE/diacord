@@ -1,8 +1,15 @@
 import { Channel, Snowflake } from "@diacord/api-types"
-import { getNewDiffs, removeNull } from "../utils"
+import { RouteData, getNewDiffs, removeNull } from "../utils"
 import { AManager } from "./AManager"
 
 export class ChannelManager extends AManager<Channel> {
+  public async create(guildId: Snowflake, body: RouteData["PostChannel"][0]["body"]) {
+    const res = await this._apiClient.post("Channel", { route: { guildId }, body })
+    return this._binder.setObject(res.id, res)
+
+    // TODO: Change to apply operation in saveChanges() rather than instantly
+  }
+
   public override async fetch(id: Snowflake, force: boolean = false) {
     try {
       if (force) throw new Error("Forcing re-fetch")
