@@ -32,6 +32,7 @@ export type Requests = {
   GetChannel: [GetChannelRequest, GetChannelResponse]
   PatchChannel: [PatchChannelRequest, PatchChannelResponse]
   DeleteChannel: [DeleteChannelRequest, DeleteChannelResponse]
+  GetGuildChannels: [GetGuildChannelsRequest, GetGuildChannelsResponse]
 }
 
 /**
@@ -124,4 +125,13 @@ type DeleteChannelResponse = Channel
 type DeleteChannelRequest = DeleteChannelRouteParams
 type DeleteChannelRouteParams = RouteParams<{
   channelId: Snowflake
+}>
+
+/**
+ * https://discord.com/developers/docs/resources/guild#get-guild-channels
+ */
+type GetGuildChannelsResponse = Channel[]
+type GetGuildChannelsRequest = GetGuildChannelsRouteParams
+type GetGuildChannelsRouteParams = RouteParams<{
+  guildId: Snowflake
 }>

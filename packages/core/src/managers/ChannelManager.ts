@@ -10,6 +10,11 @@ export class ChannelManager extends AManager<Channel> {
     // TODO: Change to apply operation in saveChanges() rather than instantly
   }
 
+  public async fetchAll(guildId: Snowflake) {
+    const res = await this._apiClient.get("GuildChannels", { route: { guildId } })
+    return res.map(channel => this._binder.setObject(channel.id, channel))
+  }
+
   public override async fetch(channelId: Snowflake, force: boolean = false) {
     try {
       if (force) throw new Error("Forcing re-fetch")
