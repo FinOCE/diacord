@@ -2,23 +2,56 @@ import { IStore } from "../stores"
 import { Diff } from "../utils"
 import { Bound, IBinder } from "./IBinder"
 
-export abstract class ABinder<T extends object> implements IBinder<T> {
+export abstract class ABinder<T extends object, B extends object> implements IBinder<T, B> {
   protected _store: IStore<T>
+  protected _additions: Record<string, B> = {}
+  protected _links: Record<string, string> = {}
   protected _modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }> = {}
   protected _deletions: string[] = []
 
+  public get additions() {
+    return structuredClone(this._additions)
+  }
+
+  public get links() {
+    return structuredClone(this._links)
+  }
+
   public get modifications() {
-    return structuredClone(this._modifications)
+    const modifications: Record<string, { [K in keyof T]?: Diff<T[K]> }> = {}
+
+    for (const id of Object.keys(this._modifications)) {
+      const linkId = id in Object.keys(this._links) ? this._links[id] : id
+      modifications[linkId ?? id] = this._modifications[id]
+    }
+
+    return modifications
   }
 
   public get deletions() {
-    return structuredClone(this._deletions)
+    const deletions: string[] = []
+
+    for (const id of this._deletions) {
+      const linkId = id in Object.keys(this._links) ? this._links[id] : id
+      deletions.push(linkId)
+    }
+
+    return deletions
   }
 
   public abstract keys: (keyof T)[]
 
   public constructor(store: IStore<T>) {
     this._store = store
+  }
+
+  public createObject(id: string, item: T, body: B) {
+    this._additions[id] = body
+    return this.setObject(id, item)
+  }
+
+  public createLink(mockId: string, realId: string) {
+    this._links[mockId] = realId
   }
 
   public getObject(id: string) {
@@ -38,10 +71,7 @@ export abstract class ABinder<T extends object> implements IBinder<T> {
   }
 
   public getValue<K extends keyof T>(id: string, key: K) {
-    const item = this._store.get(id)
-    const clone = structuredClone(item)
-
-    return clone[key]
+    return this.getObject(id)[key]
   }
 
   public setValue<K extends keyof T>(id: string, key: K, value: T[K]) {
@@ -57,10 +87,7 @@ export abstract class ABinder<T extends object> implements IBinder<T> {
   }
 
   public track(id: string) {
-    const item = { id } as T
-    this._store.set(id, item)
-
-    return this._bind(id, item)
+    return this.setObject(id, { id } as T)
   }
 
   protected _bind(id: string, item: T) {
