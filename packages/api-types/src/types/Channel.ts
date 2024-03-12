@@ -45,215 +45,236 @@ export type Channel = {
 }
 
 //#region SPECIFIC CHANNELS, NEED TO VERIFY
-export type DmChannel = Pick<Channel, "id" | "type" | "last_message_id" | "recipients" | "last_pin_timestamp"> & {
-  type: ChannelType.DM
-}
+export type DmChannel = Required<
+  Pick<Channel, "id" | "type" | "last_message_id" | "recipients" | "last_pin_timestamp"> & {
+    type: ChannelType.DM
+  }
+>
 
-export type DmGroupChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "name"
-  | "last_message_id"
-  | "recipients"
-  | "icon"
-  | "owner_id"
-  | "application_id"
-  | "managed"
-  | "last_pin_timestamp"
-> & { type: ChannelType.GROUP_DM }
+export type DmGroupChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "name"
+    | "last_message_id"
+    | "recipients"
+    | "icon"
+    | "owner_id"
+    | "application_id"
+    | "managed"
+    | "last_pin_timestamp"
+  > & { type: ChannelType.GROUP_DM }
+>
 
-export type GuildAnnouncementChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "position"
-  | "permission_overwrites"
-  | "name"
-  | "topic"
-  | "last_message_id"
-  | "parent_id"
-  | "last_pin_timestamp"
-  | "permissions"
+export type GuildAnnouncementChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "position"
+    | "permission_overwrites"
+    | "name"
+    | "topic"
+    | "last_message_id"
+    | "parent_id"
+    | "last_pin_timestamp"
+    | "permissions"
+  >
 > & { type: ChannelType.GUILD_ANNOUNCEMENT }
 
-export type GuildCategoryChannel = Pick<
-  Channel,
-  "id" | "type" | "guild_id" | "position" | "permission_overwrites" | "name" | "permissions"
+export type GuildCategoryChannel = Required<
+  Pick<Channel, "id" | "type" | "guild_id" | "position" | "permission_overwrites" | "name" | "permissions">
 > & {
   type: ChannelType.GUILD_CATEGORY
 }
 
-export type GuildForumChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "position"
-  | "permission_overwrites"
-  | "name"
-  | "topic"
-  | "last_message_id"
-  | "rate_limit_per_user"
-  | "parent_id"
-  | "last_pin_timestamp"
-  | "permissions"
-  | "flags"
-  | "available_tags"
-  | "applied_tags"
-  | "default_reaction_emoji"
-  | "default_sort_order"
-  | "default_forum_layout"
+export type GuildForumChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "position"
+    | "permission_overwrites"
+    | "name"
+    | "topic"
+    | "last_message_id"
+    | "rate_limit_per_user"
+    | "parent_id"
+    | "last_pin_timestamp"
+    | "permissions"
+    | "flags"
+    | "available_tags"
+    | "applied_tags"
+    | "default_reaction_emoji"
+    | "default_sort_order"
+    | "default_forum_layout"
+  >
 > & {
   type: ChannelType.GUILD_FORUM
 }
 
-export type GuildMediaChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "position"
-  | "permission_overwrites"
-  | "name"
-  | "topic"
-  | "last_message_id"
-  | "rate_limit_per_user"
-  | "parent_id"
-  | "last_pin_timestamp"
-  | "permissions"
-  | "flags"
-  | "available_tags"
-  | "applied_tags"
-  | "default_reaction_emoji"
-  | "default_sort_order"
+export type GuildMediaChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "position"
+    | "permission_overwrites"
+    | "name"
+    | "topic"
+    | "last_message_id"
+    | "rate_limit_per_user"
+    | "parent_id"
+    | "last_pin_timestamp"
+    | "permissions"
+    | "flags"
+    | "available_tags"
+    | "applied_tags"
+    | "default_reaction_emoji"
+    | "default_sort_order"
+  >
 > & {
   type: ChannelType.GUILD_MEDIA
 }
 
-export type GuildStageChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "position"
-  | "permission_overwrites"
-  | "name"
-  | "topic"
-  | "bitrate"
-  | "user_limit"
-  | "parent_id"
-  | "rtc_region"
-  | "video_quality_mode"
-  | "permissions"
+export type GuildStageChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "position"
+    | "permission_overwrites"
+    | "name"
+    | "topic"
+    | "bitrate"
+    | "user_limit"
+    | "parent_id"
+    | "rtc_region"
+    | "video_quality_mode"
+    | "permissions"
+  >
 > & {
   type: ChannelType.GUILD_STAGE_VOICE
 }
 
-export type GuildTextChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "position"
-  | "permission_overwrites"
-  | "name"
-  | "topic"
-  | "nsfw"
-  | "last_message_id"
-  | "rate_limit_per_user"
-  | "parent_id"
-  | "last_pin_timestamp"
-  | "permissions"
+export type GuildTextChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "position"
+    | "permission_overwrites"
+    | "name"
+    | "topic"
+    | "nsfw"
+    | "last_message_id"
+    | "rate_limit_per_user"
+    | "parent_id"
+    | "last_pin_timestamp"
+    | "permissions"
+  >
 > & {
   type: ChannelType.GUILD_TEXT
 }
 
-export type GuildVoiceChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "position"
-  | "permission_overwrites"
-  | "name"
-  | "topic"
-  | "bitrate"
-  | "user_limit"
-  | "parent_id"
-  | "rtc_region"
-  | "video_quality_mode"
-  | "permissions"
+export type GuildVoiceChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "position"
+    | "permission_overwrites"
+    | "name"
+    | "topic"
+    | "bitrate"
+    | "user_limit"
+    | "parent_id"
+    | "rtc_region"
+    | "video_quality_mode"
+    | "permissions"
+  >
 > & {
   type: ChannelType.GUILD_VOICE
 }
 
-export type ThreadAnnouncementChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "permission_overwrites"
-  | "name"
-  | "last_message_id"
-  | "rate_limit_per_user"
-  | "owner_id"
-  | "parent_id"
-  | "message_count"
-  | "member_count"
-  | "thread_metadata"
-  | "member"
-  | "default_auto_archive_duration"
-  | "permissions"
-  | "total_messages_sent"
-  | "default_thread_rate_limit_per_user"
+export type ThreadAnnouncementChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "permission_overwrites"
+    | "name"
+    | "last_message_id"
+    | "rate_limit_per_user"
+    | "owner_id"
+    | "parent_id"
+    | "message_count"
+    | "member_count"
+    | "thread_metadata"
+    | "member"
+    | "default_auto_archive_duration"
+    | "permissions"
+    | "total_messages_sent"
+    | "default_thread_rate_limit_per_user"
+  >
 > & {
   type: ChannelType.ANNOUNCEMENT_THREAD
 }
 
-export type ThreadPrivateChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "permission_overwrites"
-  | "name"
-  | "last_message_id"
-  | "rate_limit_per_user"
-  | "owner_id"
-  | "parent_id"
-  | "message_count"
-  | "member_count"
-  | "thread_metadata"
-  | "member"
-  | "default_auto_archive_duration"
-  | "permissions"
-  | "total_messages_sent"
-  | "default_thread_rate_limit_per_user"
+export type ThreadPrivateChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "permission_overwrites"
+    | "name"
+    | "last_message_id"
+    | "rate_limit_per_user"
+    | "owner_id"
+    | "parent_id"
+    | "message_count"
+    | "member_count"
+    | "thread_metadata"
+    | "member"
+    | "default_auto_archive_duration"
+    | "permissions"
+    | "total_messages_sent"
+    | "default_thread_rate_limit_per_user"
+  >
 > & {
   type: ChannelType.PRIVATE_THREAD
 }
 
-export type ThreadPublicChannel = Pick<
-  Channel,
-  | "id"
-  | "type"
-  | "guild_id"
-  | "permission_overwrites"
-  | "name"
-  | "last_message_id"
-  | "rate_limit_per_user"
-  | "owner_id"
-  | "parent_id"
-  | "message_count"
-  | "member_count"
-  | "thread_metadata"
-  | "member"
-  | "default_auto_archive_duration"
-  | "permissions"
-  | "total_messages_sent"
-  | "default_thread_rate_limit_per_user"
+export type ThreadPublicChannel = Required<
+  Pick<
+    Channel,
+    | "id"
+    | "type"
+    | "guild_id"
+    | "permission_overwrites"
+    | "name"
+    | "last_message_id"
+    | "rate_limit_per_user"
+    | "owner_id"
+    | "parent_id"
+    | "message_count"
+    | "member_count"
+    | "thread_metadata"
+    | "member"
+    | "default_auto_archive_duration"
+    | "permissions"
+    | "total_messages_sent"
+    | "default_thread_rate_limit_per_user"
+  >
 > & {
   type: ChannelType.PUBLIC_THREAD
 }
