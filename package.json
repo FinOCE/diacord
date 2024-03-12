@@ -1,6 +1,6 @@
 {
   "name": "diacord",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Infrastructure-as-code for Discord servers",
   "scripts": {
     "build": "npm run build --workspaces"
@@ -8,5 +8,19 @@
   "workspaces": [
     "./packages/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FinOCE/diacord.git"
+  },
+  "keywords": [
+    "discord",
+    "infrastructure-as-code",
+    "cli"
+  ],
+  "author": "FinOCE",
+  "bugs": {
+    "url": "https://github.com/FinOCE/diacord/issues"
+  },
+  "homepage": "https://github.com/FinOCE/diacord#readme",
   "license": "GPL-3.0-only"
 }
