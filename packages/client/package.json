@@ -30,7 +30,7 @@
     "url": "https://github.com/FinOCE/diacord/issues"
   },
   "homepage": "https://github.com/FinOCE/diacord#readme",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "dependencies": {},
   "devDependencies": {
     "typescript": "^5.3.3"
